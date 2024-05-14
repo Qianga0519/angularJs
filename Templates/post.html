@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-md-10">
+        <div ng-controller="postCtrl">
+          <h4>ALL POSTS</h4>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Created</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="post in posts.info">
+                  <td>{{ post.title }}</td>
+                  <td>{{ post.description }}</td>
+                  <td>{{ post.published_on }}</td>
+                  <td>
+                    <a ng-href="#!post/{{ post.id }}" class="badge bg-primary">View</a>
+                    <a ng-href="#!delete/{{ post.id }}" class="badge bg-danger">Delete</a>
+                    <a ng-href="#!updatePost/{{ post.id }}" class="badge bg-danger">Update</a>
+
+                  </td>
+              </tr>
+
+          </tbody>
+          </table>
+        </div>
+    </div>
+</div>
