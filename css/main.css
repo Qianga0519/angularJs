@@ -1,0 +1,27 @@
+:root {
+    --primary-color: #87cefa
+}
+
+body {
+    height: 1000vh;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.btn-search:focus {
+    outline: none;
+    border-color: inherit;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.btn-login {
+    margin-right: 5px;
+}
+.nav-item{
+    padding: 0px 5px;
+}
