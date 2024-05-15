@@ -2,9 +2,9 @@
     --primary-color: #87cefa
 }
 
-body {
+/* body {
     height: 1000vh;
-}
+} */
 
 * {
     margin: 0;
@@ -22,6 +22,7 @@ body {
 .btn-login {
     margin-right: 5px;
 }
-.nav-item{
+
+.nav-item {
     padding: 0px 5px;
 }

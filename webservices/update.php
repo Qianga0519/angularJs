@@ -31,4 +31,3 @@ if (!empty($id) && is_numeric($id) && !empty($title) && !empty($description)) {
 
 header('Content-type: application/json');
 echo json_encode($response);
-?>
