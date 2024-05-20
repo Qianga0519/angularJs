@@ -2,34 +2,40 @@
   <div class="col-md-12">
     <div ng-controller="postCtrl">
       <h4>ALL POSTS</h4>
-   
       
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">Title</th>
-              <th scope="col">Description</th>
-              <th scope="col">Created</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="post in posts.info">
-              <td>{{ post.title }}</td>
-              <td>{{ post.description }}</td>
-              <td>{{ post.published_on }}</td>
-              <td>
-                <a ng-href="#!post/{{ post.id }}" class="badge bg-primary">View</a>
-                <a ng-href="#!delete/{{ post.id }}" class="badge bg-danger">Delete</a>
-                <a ng-href="#!updatePost/{{ post.id }}" class="badge bg-danger">Update</a>
-
-              </td>
-            </tr>
-
-          </tbody>
-        </table>
-       
+      <input type="text" ng-model="searchQuery" placeholder="Search posts" ng-change="loadPosts()">
+      <table class="table table-hover" ng-if="posts.info.length > 0">
+        <thead>
+          <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Created</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="post in posts.info">
+            <td>{{ post.title }}</td>
+            <td>{{ post.description.length > 50 ? (post.description | limitTo: 50) + '...' : post.description }}</td>
+            <td>{{ post.published_on }}</td>
+            <td>
+              <a ng-href="#!post/{{ post.id }}" class="badge bg-primary">View</a>
+              <a ng-href="#!delete/{{ post.id }}" class="badge bg-danger">Delete</a>
+              <a ng-href="#!updatePost/{{ post.id }}" class="badge bg-warning">Update</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div ng-if="noDataMessage">
+        <p>{{ noDataMessage }}</p>
       </div>
+      <div>
+        <button ng-disabled="currentPage === 1" ng-click="goToPage(currentPage - 1)">Previous</button>
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+        <button ng-disabled="currentPage === totalPages" ng-click="goToPage(currentPage + 1)">Next</button>
+      </div>
+
     </div>
   </div>
+</div>
 </div>
