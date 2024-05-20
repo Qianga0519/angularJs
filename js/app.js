@@ -174,41 +174,43 @@ app.controller("viewCtrl", function ($scope, $http, $routeParams) {
 //     })
 // });
 
-// app.directive('ckEditor', function () {
-//     return {
-//         require: '?ngModel',
-//         link: function (scope, element, attrs, ngModel) {
-//             if (!ngModel) return;
-//             ClassicEditor
-//                 .create(element[0])
-//                 .then(editor => {
-//                     editor.model.document.on('change', () => {
-//                         scope.$apply(() => {
-//                             let str = editor.getData();
-//                             str = str.replace(/<[^>]*>?/gm, '');
-//                             ngModel.$setViewValue(str);
-//                         });
-//                     });
-//                 })
-//                 .catch(error => {
-//                     console.error(error);
-//                 });
-//         }
-//     };
-// });
+app.directive('ckEditor', function () {
+    return {
+        require: '?ngModel',
+        link: function (scope, element, attrs, ngModel) {
+            if (!ngModel) return;
+            ClassicEditor
+                .create(element[0])
+                .then(editor => {
+                    editor.model.document.on('change', () => {
+                        scope.$apply(() => {
+                            let str = editor.getData();
+                            str = str.replace(/<[^>]*>?/gm, '');
+                            ngModel.$setViewValue(str);
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    };
+});
 
 app.controller("createCtrl", function ($scope, $http) {
     $scope.description = "";
     $scope.title = "";
+
     $scope.add = function () {
-        console.log($scope.title, $scope.description)
+        console.log($scope.title.toString(), $scope.description)
+
         var data = {
-            title: $scope.title,
-            description: $scope.description
+            title: $scope.title.toString(),
+            description: $scope.description.toString()
         };
         $http.post("webservices/addPost.php", data)
             .then(function (response) {
-                $scope.msg = response;
+                $scope.msg = response.data;
                 $scope.title = "";
                 $scope.description = "";
             }, function (error) {
