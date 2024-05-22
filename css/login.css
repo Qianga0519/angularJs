@@ -1,6 +1,10 @@
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
+:root {
+    --color-primary: #4267B2;
+}
+
 * {
 	box-sizing: border-box;
 }
@@ -44,8 +48,8 @@
  
 .but {
 	border-radius: 20px;
-	border: 1px solid #FF4B2B;
-	background-color: #FF4B2B;
+	border: 1px solid var(--color-primary);
+	background-color: var(--color-primary);
 	color: #FFFFFF;
 	font-size: 12px;
 	font-weight: bold;

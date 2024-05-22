@@ -25,11 +25,30 @@ app.config(function ($routeProvider, $locationProvider) {
         })
         .when('/login', {
             templateUrl: 'Templates/login.html',
-
         })
         .otherwise({
             redirectTo: '/'
         })
+});
+
+
+app.directive('loadCss', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var head = document.getElementsByTagName('head')[0];
+            var link = document.createElement('link');
+            link.type = 'text/css';
+            link.rel = 'stylesheet';
+            link.href = attrs.loadCss;
+            head.appendChild(link);
+
+            // Clean up on destroy
+            scope.$on('$destroy', function () {
+                head.removeChild(link);
+            });
+        }
+    };
 });
 
 
@@ -49,6 +68,7 @@ app.controller("updateCtrl", function ($scope, $http, $routeParams) {
 
     // Update the post
     $scope.updatePost = function () {
+
         var data = {
             id: $scope.post.id,
             title: $scope.post.title,
@@ -67,6 +87,29 @@ app.controller("updateCtrl", function ($scope, $http, $routeParams) {
             }
         });
     };
+}).directive('ckEditor', function () {
+    return {
+        require: '?ngModel',
+        link: function (scope, element, attrs, ngModel) {
+            if (!ngModel) return;
+
+            var editor = CKEDITOR.replace(element[0]);
+
+            editor.on('instanceReady', function () {
+                editor.setData(ngModel.$viewValue || '');
+            });
+
+            editor.on('change', function () {
+                scope.$apply(function () {
+                    ngModel.$setViewValue(editor.getData());
+                });
+            });
+
+            ngModel.$render = function () {
+                editor.setData(ngModel.$viewValue || '');
+            };
+        }
+    };
 });
 
 app.controller("deleteCtrl", function ($scope, $http, $routeParams) {
@@ -80,16 +123,6 @@ app.controller("deleteCtrl", function ($scope, $http, $routeParams) {
 
         })
 });
-
-
-// app.controller("postCtrl", function($scope, $http){
-//     $http.get("webservices/allpost.php")
-//     .then(function(response){
-//         $scope.posts = response.data;
-//         console.log($scope.posts);
-//     });
-// });
-
 
 app.controller("postCtrl", function ($scope, $http) {
     $scope.searchQuery = '';
@@ -132,77 +165,55 @@ app.controller("postCtrl", function ($scope, $http) {
         $scope.loadPosts();
     });
 
+
     $scope.loadPosts(); // Initial load
+    $scope.searchRemove = () => {
+        document.querySelector('.search input').value = "";
+        $scope.searchQuery = "";
+        $scope.loadPosts();
+    }
 });
-
-
-
 app.controller("viewCtrl", function ($scope, $http, $routeParams) {
+    var postId = document.querySelector('.post-content-id');
+
     $http({
         url: "webservices/getPost.php",
         params: { id: $routeParams.id },
         method: "get"
     })
         .then(function (response) {
-            $scope.posts = response.data;
+            $scope.posts = response;
+            postId.innerHTML = $scope.posts.data.description
+            //    or postId.innerHTML =  `${response.data.description}`
             console.log($scope.posts);
         })
 });
 
-// app.controller("createCtrl", function($scope){
-//     $('#submit').click(function(){
-//         var title = $("#title").val();
-//         var des = $("#description").val();
-//         var dataString = $("#myForm").serialize();
-//         if(title == "" || des == ""){
-//             $("#msg").html("Please fill all details");
-//         }
-//         else{
-//             $.ajax({
-//                 type:'POST',
-//                 url: "webservices/addPost.php",
-//                 data: dataString,
-//                 cache: false,
-//                 success: function(result){
-//                     $('#msg').html(result);
-//                     var title = $("#title").val();
-//                     var descr = $('#description').val();
-//                 }
-//             });
-//         }
-//         return false;
-//     })
-// });
-
-app.directive('ckEditor', function () {
-    return {
-        require: '?ngModel',
-        link: function (scope, element, attrs, ngModel) {
-            if (!ngModel) return;
-            ClassicEditor
-                .create(element[0])
-                .then(editor => {
-                    editor.model.document.on('change', () => {
-                        scope.$apply(() => {
-                            let str = editor.getData();
-                            str = str.replace(/<[^>]*>?/gm, '');
-                            ngModel.$setViewValue(str);
-                        });
-                    });
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-        }
-    };
-});
-
 app.controller("createCtrl", function ($scope, $http) {
+    var btnCreate = document.querySelector('.btn-create-post');
+    btnCreate.disabled = true;
+    btnCreate.classList.add('disabled');
     $scope.description = "";
     $scope.title = "";
+    $scope.msg = "";
+    $scope.statusTitle = false;
+    $scope.statusDes = false;
+    $scope.titleChange = () => {
+        if ($scope.title.toString().length > 0) {
+            $scope.statusTitle = true
+            btnCreate.disabled = false;
+            btnCreate.classList.remove('disabled');
+        } else {
+            $scope.statusTitle = false
+            btnCreate.disabled = true;
+            btnCreate.classList.add('disabled');
+        }
+    }
 
     $scope.add = function () {
-        console.log($scope.title.toString(), $scope.description)
+        var myModalEl = document.getElementById('createModal');
+        var modal = new bootstrap.Modal(myModalEl);
+
 
         var data = {
             title: $scope.title.toString(),
@@ -211,9 +222,11 @@ app.controller("createCtrl", function ($scope, $http) {
         $http.post("webservices/addPost.php", data)
             .then(function (response) {
                 $scope.msg = response.data;
-                $scope.title = "";
-                $scope.description = "";
+                location.reload()
+                modal.hide();
             }, function (error) {
+                console.error(error);
+            }).catch(function (error) {
                 console.error(error);
             });
     };

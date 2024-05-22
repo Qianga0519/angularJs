@@ -1,26 +1,26 @@
+<div load-css="./css/create.css"></div>
 <div class="row">
-  <div class="col-md-10">
+  <div class="col-md-12 content-create">
     <form id="myForm" method="post">
       <fieldset>
-        <h4>ADD POST11</h4>
+        <h4>ADD POST</h4>
         <div>
-          <label for="title" class="form-label mt-4">Title</label>
-          <input type="text" class="form-control" ng-model="title" name="title" id="title">
+          <label for="title" class="form-label mt-4"><strong>Title</strong></label>
+          <input type="text" placeholder="Input title" class="form-control" ng-change="titleChange()" ng-model="title"
+            name="title" id="title">
         </div>
         <div>
-          <label for="description" class="form-label mt-4">description</label>
+          <label for="description" class="form-label mt-4"><strong>Description</strong></label>
           <textarea name="description" id="editor" ng-model="description" ck-editor></textarea>
         </div>
-        <p>{{description}}/{{title}}</p>
         <p id="msg">{{msg}}</p>
         <div class="from-group">
           <div class="col-lg-10 col-lg-offset-2">
-            <input type="button" ng-click="add()" id="submit" class="btn btn-primary" value="ADD POST">
-            <a href="#/" class="btn btn-primary">BACK</a>
+            <input type="button" ng-click="add()" id="submit" class="btn btn-primary btn-create-post" value="ADD POST">
+            <a href="#/" class="btn btn-primary btn-back">BACK</a>
           </div>
         </div>
       </fieldset>
     </form>
   </div>
-
 </div>

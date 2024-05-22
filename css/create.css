@@ -1,0 +1,38 @@
+:root {
+    --color-primary: #4267B2;
+}
+
+.content-create {
+    position: relative;
+    padding: 30px;
+}
+
+h4 {
+    color: var(--color-primary);
+    text-align: center;
+    font-weight: bold;
+}
+
+#msg {
+    color: red;
+}
+
+.btn-back,
+.btn-create-post {
+    color: var(--color-primary);
+    background: white;
+    transition: .5s;
+    border: 1px solid var(--color-primary);
+}
+
+.btn-create-post.disabled {
+    color: white;
+    background: var(--color-primary);
+border: none;
+}
+
+.btn-back:hover,
+.btn-create-post:hover {
+    color: white;
+    background: var(--color-primary);
+}

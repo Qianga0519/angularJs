@@ -10,7 +10,12 @@ $response = [];
 
 // Validate the input
 if (!empty($id) && is_numeric($id) && !empty($title) && !empty($description)) {
-    $sql = "UPDATE lbl_posts SET title = ?, description = ? WHERE id = ?";
+    if ($description != "") {
+        $sql = "UPDATE lbl_posts SET title = ?, description = ? WHERE id = ?";
+    } else {
+        $sql = "UPDATE lbl_posts SET title = ? WHERE id = ?";
+    }
+
     $stmt = $con->prepare($sql);
     $stmt->bind_param("ssi", $title, $description, $id);
 
@@ -31,4 +36,3 @@ if (!empty($id) && is_numeric($id) && !empty($title) && !empty($description)) {
 
 header('Content-type: application/json');
 echo json_encode($response);
-?>

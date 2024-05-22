@@ -1,17 +1,17 @@
 <div class="row">
-    <div class="col-md-10">
+    <div class="col-md-12">
         <form id="updateForm">
             <fieldset>
                 <legend>Update Post</legend>
                 <div>
-                    
                     <label for="title" class="form-label mt-4">Title</label>
                     <input type="text" class="form-control" ng-model="post.title" id="title" placeholder="Title">
                 </div>
                 <div>
                     <label for="description" class="form-label mt-4">Description</label>
-                    <textarea class="form-control" ng-model="post.description" id="description" rows="3" placeholder="Description"></textarea>
+                    <textarea name="description" id="description" ng-model="post.description" ck-editor></textarea>
                 </div>
+                
                 <p id="msg"></p>
                 <div class="form-group">
                     <div class="col-lg-10 col-lg-offset-2">

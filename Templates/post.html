@@ -1,12 +1,16 @@
+<div load-css="./css/post.css"></div>
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-12  content-list-post">
     <div ng-controller="postCtrl">
       <h4>ALL POSTS</h4>
-      
-      <input type="text" ng-model="searchQuery" placeholder="Search posts" ng-change="loadPosts()">
+      <div class="search">
+        <input type="text" ng-model="searchQuery" placeholder="Search posts" ng-change="loadPosts()">
+        <i class="fa-solid fa-xmark" ng-click="searchRemove()"></i>
+      </div>
       <table class="table table-hover" ng-if="posts.info.length > 0">
         <thead>
           <tr>
+            <th scope="col">Number</th>
             <th scope="col">Title</th>
             <th scope="col">Description</th>
             <th scope="col">Created</th>
@@ -14,7 +18,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="post in posts.info">
+          <tr ng-repeat="post in posts.info track by $index">
+            <td>{{$index + 1}}</td>
             <td>{{ post.title }}</td>
             <td>{{ post.description.length > 50 ? (post.description | limitTo: 50) + '...' : post.description }}</td>
             <td>{{ post.published_on }}</td>
@@ -29,13 +34,13 @@
       <div ng-if="noDataMessage">
         <p>{{ noDataMessage }}</p>
       </div>
-      <div>
-        <button ng-disabled="currentPage === 1" ng-click="goToPage(currentPage - 1)">Previous</button>
+      <div class="pagination">
+        <button ng-disabled="currentPage === 1" ng-click="goToPage(currentPage - 1)">Pre</button>
         <span>Page {{ currentPage }} of {{ totalPages }}</span>
         <button ng-disabled="currentPage === totalPages" ng-click="goToPage(currentPage + 1)">Next</button>
       </div>
-
     </div>
+   
   </div>
 </div>
 </div>
