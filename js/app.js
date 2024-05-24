@@ -1,5 +1,13 @@
 var app = angular.module('myApp', ["ngRoute"]);
 
+app.controller('mainCtrl', function ($scope) {
+    $scope.bgColor = "white";
+    $scope.changeBG = ()=>{
+        document.querySelector('body').style.background = $scope.bgColor;
+        document.querySelector('.select-bg').style.background = $scope.bgColor;
+    }
+})
+
 app.config(function ($routeProvider, $locationProvider) {
     $locationProvider.hashPrefix('!'); // Thêm dòng này để đảm bảo sử dụng hashbang mode
     $routeProvider
@@ -174,17 +182,16 @@ app.controller("postCtrl", function ($scope, $http) {
     }
 });
 app.controller("viewCtrl", function ($scope, $http, $routeParams) {
-    var postId = document.querySelector('.post-content-id');
-
+    var des = document.querySelector('.description')
+    
     $http({
         url: "webservices/getPost.php",
         params: { id: $routeParams.id },
         method: "get"
     })
         .then(function (response) {
-            $scope.posts = response;
-            postId.innerHTML = $scope.posts.data.description
-            //    or postId.innerHTML =  `${response.data.description}`
+            $scope.posts = response.data;
+            des.innerHTML = `${response.data.description}`
             console.log($scope.posts);
         })
 });
@@ -222,6 +229,7 @@ app.controller("createCtrl", function ($scope, $http) {
         $http.post("webservices/addPost.php", data)
             .then(function (response) {
                 $scope.msg = response.data;
+
                 location.reload()
                 modal.hide();
             }, function (error) {

@@ -1,16 +1,20 @@
+<div load-css="./css/viewpost.css"></div>
 <div class="row">
-    <div class="col-md-10">
-        <div ng-controller="viewCtrl">
-          <h4>VIEW POSTS</h4>
-          <!-- <fieldset>
-            <h4>{{ posts.title }}</h4>
-            <p>{{ posts.description }}</p>
-            <p>Published on: {{ posts.published_on }}</p>
-          </fieldset> -->
-          <div class="post-content-id">
-          
-          </div>
-          <a href="#/" class="btn btn-primary">BACK</a>
+  <div class="col-md-12">
+    <h4>VIEW POSTS</h4>
+    <div ng-controller="viewCtrl" class="content-post-view">
+      <h5>{{ posts.title }}</h5>
+      <p>Created at: {{ posts.created_at }}</p>
+      <div class="content-main">
+        <div class="description">
         </div>
+      </div>
+      <div class="interact">
+        <i class="fa-solid fa-thumbs-up"></i>   
+        <i class="fa-regular fa-message"></i>
+         <i class="fa-solid fa-share"></i>
+      </div>
     </div>
+    <a href="#/" class="btn btn-primary btn-back glow-on-hover">BACK</a>
+  </div>
 </div>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="myApp">
+<html ng-app="myApp" ng-controller="mainCtrl">
 
 <head>
   <meta charset="UTF-8">
@@ -33,14 +33,56 @@
   <script src="https://cdn.ckeditor.com/ckeditor5/[version.number]/[distribution]/ckeditor.js"></script>
 </head>
 
-<body>
-  <div ng-include="'./Templates/navbar.html'"></div>
+<body >
+  <!-- <div ng-include="'./Templates/navbar.html'"></div> -->
+  <nav class="navbar navbar-expand-lg fixed-top bg-dark" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand me-auto" href="#">Logo</a>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#/">Home</a>
+                    </li>
+                    <li class="nav-item item-btn-add">
+                        <button type="button" class="btn btn-primary btn-addpost" data-toggle="modal"
+                            data-target="#createModal" data-whatever="@mdo">Add post</button>
+                        <!-- <a class="nav-link" href="#!createPost">Add post</a> -->
+                    </li>
+                    <form class="d-flex justify-content-end" role="search">
+                        <input class="form-control search-input" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success btn-search" type="submit">Search</button>
+                    </form>
+                </ul>
+            </div>
+        </div>
+        <div class="change-color-box" >
+            <select class="select-bg" name="color" id="color" ng-model="bgColor" ng-change="changeBG()">
+                <option value="white">White</option>
+                <option value="rgba(198, 226, 255)">SlateGray</option>
+                <option value="rgba(255, 230, 247)">Pink</option>
+                <option value="rgba(169, 169, 169)">DarkGray</option>
+            </select>
+        </div>
+        <button class="btn-login btn btn-outline-success glow-on-hover" href="#!login">Login</button>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+            aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>
+
   <div class="container" style="margin-top: 60px;">
+
     <ng-view></ng-view>
   </div>
 
-  <div class="modal fade "  id="createModal" role="dialog" data-bs-backdrop="static" aria-labelledby="exampleModalLabel" ng-controller="createCtrl"
-    aria-hidden="true">
+  <div class="modal fade " id="createModal" role="dialog" data-bs-backdrop="static" aria-labelledby="exampleModalLabel"
+    ng-controller="createCtrl" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -71,14 +113,18 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">BACK</button>
-          <button type="button" ng-click="add()" id="submit" data-dismiss="modal"  class="btn btn-primary btn-create-post">ADD POST</button>
+          <button type="button" ng-click="add()" id="submit" data-dismiss="modal"
+            class="btn btn-primary btn-create-post">ADD POST</button>
         </div>
       </div>
     </div>
   </div>
+  <div ng-include="'./Templates/footer.html'">
+
   </div>
 
   <script src="js/app.js"></script>
+
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
   integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
