@@ -1,8 +1,10 @@
+<div load-css="./css/update.css"></div>
+
 <div class="row">
     <div class="col-md-12">
         <form id="updateForm">
             <fieldset>
-                <legend>Update Post</legend>
+                <h4>Update Post</h4>
                 <div>
                     <label for="title" class="form-label mt-4">Title</label>
                     <input type="text" class="form-control" ng-model="post.title" id="title" placeholder="Title">
@@ -15,8 +17,8 @@
                 <p id="msg"></p>
                 <div class="form-group">
                     <div class="col-lg-10 col-lg-offset-2">
-                        <button type="button" class="btn btn-primary" ng-click="updatePost()">Update Post</button>
-                        <a href="#/" class="btn btn-primary">Back</a>
+                        <button type="button" class="btn btn-update btn-primary glow-on-hover" ng-click="updatePost()">Update Post</button>
+                        <a href="#/" class="btn btn-primary glow-on-hover">Back</a>
                     </div>
                 </div>
             </fieldset>

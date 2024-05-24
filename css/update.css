@@ -1,56 +1,48 @@
-:root {
-    --color-primary: #4267B2;
+
+h4::before {
+    transform: scaleX(0);
+    transform-origin: bottom right;
+}
+
+h4:hover::before {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+h4::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    inset: 0 0 0 0;
+    background: hsl(200 100% 80%);
+    z-index: -1;
+    transition: transform .3s ease;
+}
+
+h4 {
+    position: relative;
+    font-size: 5rem;
 }
 
 
+.content-list-post {
+    position: relative;
+    padding: 30px;
+}
 
-h4,
-h5 {
+.postCtrl {
+    position: relative;
+}
+
+h4 {
     color: var(--color-primary);
     text-align: center;
     font-weight: bold;
 }
-
-h5 {
-    padding: 5px 10px;
-}
-
-.content-post-view {}
-
-.content-main {
-
-    overflow: hidden;
-    padding: 10px;
-    border: .2px solid black;
-}
-
-.interact {
-    border: .2px solid black;
-    display: flex;
-    width: 100%;
-    height: 50px;
-    align-items: center;
-    justify-content: center;
-}
-
-.interact i {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30%;
-    font-size: 30px;
-    padding: 10px;
-    padding: 10px;
-}
-
-.interact i:nth-child(1) {
-    justify-content: left;
-}
-
-.interact i:nth-child(3) {
-    justify-content: right;
-}
-
 .glow-on-hover {
 
     width: 70px;
@@ -136,8 +128,6 @@ h5 {
         background-position: 0 0;
     }
 }
-
-.btn-back {
-    position: absolute;
-    right: 15px;
+.btn-update{
+width: 120px;
 }

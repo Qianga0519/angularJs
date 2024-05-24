@@ -3,6 +3,36 @@
 }
 
 
+h4::before {
+    transform: scaleX(0);
+    transform-origin: bottom right;
+}
+
+h4:hover::before {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+h4::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    inset: 0 0 0 0;
+    background: hsl(200 100% 80%);
+    z-index: -1;
+    transition: transform .3s ease;
+}
+
+h4 {
+    position: relative;
+    font-size: 5rem;
+}
+
+
 .content-list-post {
     position: relative;
     padding: 30px;
@@ -18,6 +48,11 @@ h4 {
     font-weight: bold;
 }
 
+h3 {
+    color: var(--color-primary);
+    text-align: center;
+    font-weight: bold;
+}
 /* .search {
     padding: 5px;
     position: relative;
