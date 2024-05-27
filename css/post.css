@@ -53,6 +53,7 @@ h3 {
     text-align: center;
     font-weight: bold;
 }
+
 /* .search {
     padding: 5px;
     position: relative;
@@ -198,4 +199,19 @@ h3 {
 .pagination button:nth-child(3):hover {
     background: var(--color-primary);
     color: white;
+}
+
+/* ANIMATION */
+.item-post-animation.ng-leave {
+    transition: all .5s linear;
+    opacity: 1;
+    transform: translateX(50px);
+    
+
+}
+
+.item-post-animation.ng-leave.ng-leave-active {
+    opacity: 0;
+    transform: translateX(0px);
+   
 }

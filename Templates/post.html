@@ -7,7 +7,6 @@
         <input type="text" ng-model="searchQuery" placeholder="Search posts" ng-change="loadPosts()">
         <i class="fa-solid fa-xmark" ng-click="searchRemove()"></i>
       </div> -->
-
       <div class="search-box">
         <input class="search-box-input" ng-model="searchQuery" type="text" ng-change="loadPosts()">
         <button class="search-box-btn">
@@ -19,21 +18,23 @@
           <tr>
             <th scope="col">Number</th>
             <th scope="col">Title</th>
-            <!-- <th scope="col">Description</th> -->
+            <th scope="col">Description</th>
             <th scope="col">Created</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="post in posts.info track by $index">
+          <tr class="item-post-animation" ng-repeat="post in posts.info track by $index">
             <td>{{$index + 1}}</td>
             <td>{{ post.title }}</td>
-            <!-- <td>{{ post.description.length > 50 ? (post.description | limitTo: 50) + '...' : post.description }}</td> -->
+            <td>{{ post.description.length > 50 ? (post.description | limitTo: 50) + '...' : post.description }}</td>
             <td>{{ post.created_at }}</td>
             <td>
               <a ng-href="#!post/{{ post.id }}" class="btn-post btn-view"><i class="fa-solid fa-eye"></i></a>
+              <a ng-href="#!updatePost/{{ post.id }}" class="btn-post btn-update"><i
+                  class="fa-solid fa-pen-to-square"></i></a>
               <a ng-href="#!delete/{{ post.id }}" class="btn-post btn-del"><i class="fa-solid fa-trash"></i></a>
-              <a ng-href="#!updatePost/{{ post.id }}" class="btn-post btn-update"><i class="fa-solid fa-pen-to-square"></i></a>
+
             </td>
           </tr>
         </tbody>

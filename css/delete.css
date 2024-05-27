@@ -1,0 +1,120 @@
+:root {
+    --primary-color: #4267B2;
+}
+
+h1 {
+    text-align: center;
+}
+
+.row {
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.col-md-12 {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+    position: absolute;
+    margin-top: 150px;
+
+}
+
+.btn-two {
+    height: 50px;
+    color: #FFF;
+    transition: all 0.5s;
+    position: relative;
+    width: 200px;
+}
+
+.btn-two .btn-back {
+    z-index: 2;
+    left: 0;
+    width: 100%;
+    position: absolute;
+
+}
+
+.btn-two .btn-back:active {
+    border: none;
+    outline: none;
+    box-shadow: none;
+
+}
+
+.btn-two::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    transition: all 0.5s;
+    border: 2px solid rgba(66, 103, 178, .2);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.btn-two::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    transition: all 0.5s;
+    border: 2px solid rgba(66, 103, 178, .2);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.btn-two:hover::before {
+    transform: rotate(-45deg);
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.btn-two:hover::after {
+    transform: rotate(45deg);
+    background-color: rgba(255, 255, 255, 0);
+}
+
+
+h4::before {
+    transform: scaleX(0);
+    transform-origin: bottom right;
+}
+
+h4:hover::before {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+h4::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    inset: 0 0 0 0;
+    background: hsl(200 100% 80%);
+    z-index: -1;
+    transition: transform .3s ease;
+}
+
+h4 {
+    padding: 20px;
+    position: relative;
+    font-size: 3rem;
+}

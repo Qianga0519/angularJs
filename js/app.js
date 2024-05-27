@@ -1,12 +1,25 @@
-var app = angular.module('myApp', ["ngRoute"]);
+var app = angular.module('myApp', ["ngRoute", "ngAnimate"]);
 
-app.controller('mainCtrl', function ($scope) {
+app.controller('mainCtrl', function ($scope, $rootScope) {
     $scope.bgColor = "white";
-    $scope.changeBG = ()=>{
+    $rootScope.user = JSON.parse(localStorage.getItem('user'))?.username || 'Guest';
+
+    $scope.changeBG = () => {
         document.querySelector('body').style.background = $scope.bgColor;
         document.querySelector('.select-bg').style.background = $scope.bgColor;
+    };
+
+    $scope.logout = () => {
+        localStorage.removeItem('user');
+        $rootScope.user = 'Guest';
+    };
+
+    const user = JSON.parse(localStorage.getItem('user'));
+    $scope.isLogin = false;
+    if (user) {
+        $scope.isLogin = true;
     }
-})
+});
 
 app.config(function ($routeProvider, $locationProvider) {
     $locationProvider.hashPrefix('!'); // Thêm dòng này để đảm bảo sử dụng hashbang mode
@@ -33,12 +46,53 @@ app.config(function ($routeProvider, $locationProvider) {
         })
         .when('/login', {
             templateUrl: 'Templates/login.html',
+            controller: 'authCtrl'
         })
         .otherwise({
             redirectTo: '/'
         })
 });
 
+// app.js
+app.controller("authCtrl", function ($scope, $http, $location, $rootScope) {
+    $scope.signupData = {};
+    $scope.loginData = {};
+
+    $scope.signUp = function () {
+        $http({
+            method: 'POST',
+            url: 'webservices/signup.php',
+            data: $.param($scope.signupData),
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        }).then(function (response) {
+            if (response.data.success) {
+                alert('Registration successful!');
+            } else {
+                alert('Registration failed: ' + response.data.message);
+            }
+        }, function (error) {
+            console.error('Error during registration:', error);
+        });
+    };
+
+    $scope.signIn = function () {
+        $http({
+            method: 'POST',
+            url: 'webservices/login.php',
+            data: $.param($scope.loginData),
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        }).then(function (response) {
+            alert(response.data.message);
+            if (response.data.success) {
+                localStorage.setItem('user', JSON.stringify(response.data));
+                $rootScope.user = response.data.username;
+                $location.path('/');
+            }
+        }, function (error) {
+            console.error('Error during login:', error);
+        });
+    };
+});
 
 app.directive('loadCss', function () {
     return {
@@ -76,7 +130,6 @@ app.controller("updateCtrl", function ($scope, $http, $routeParams) {
 
     // Update the post
     $scope.updatePost = function () {
-
         var data = {
             id: $scope.post.id,
             title: $scope.post.title,
@@ -121,23 +174,29 @@ app.controller("updateCtrl", function ($scope, $http, $routeParams) {
 });
 
 app.controller("deleteCtrl", function ($scope, $http, $routeParams) {
-    $http({
-        url: "webservices/delete.php",
-        params: { id: $routeParams.id },
-        method: "get"
-    })
-        .then(function (response) {
-            $scope.posts = response.data;
-
+    if (JSON.parse(localStorage.getItem('user'))) {
+        $http({
+            url: "webservices/delete.php",
+            params: { id: $routeParams.id },
+            method: "get"
         })
+            .then(function (response) {
+                $scope.posts = response.data;
+                $scope.msg = "Post Delete Successfully"
+            })
+    } else {
+        $scope.msg = "Failed to delete!"
+    }
 });
 
-app.controller("postCtrl", function ($scope, $http) {
+app.controller("postCtrl", function ($scope, $http, $routeParams) {
     $scope.searchQuery = '';
     $scope.currentPage = 1;
     $scope.posts = [];
     $scope.totalPages = 0;
     $scope.noDataMessage = '';
+
+
 
     $scope.loadPosts = function () {
         $http.get("webservices/allpost.php", {
@@ -163,9 +222,9 @@ app.controller("postCtrl", function ($scope, $http) {
         }
     };
 
-    // Watch for changes in searchQuery and currentPage to reload posts
+
     $scope.$watch('searchQuery', function () {
-        $scope.currentPage = 1; // Reset to the first page on new search
+        $scope.currentPage = 1;
         $scope.loadPosts();
     });
 
@@ -180,10 +239,11 @@ app.controller("postCtrl", function ($scope, $http) {
         $scope.searchQuery = "";
         $scope.loadPosts();
     }
+
 });
 app.controller("viewCtrl", function ($scope, $http, $routeParams) {
     var des = document.querySelector('.description')
-    
+
     $http({
         url: "webservices/getPost.php",
         params: { id: $routeParams.id },
