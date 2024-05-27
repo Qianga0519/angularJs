@@ -200,6 +200,20 @@ h3 {
     background: var(--color-primary);
     color: white;
 }
+.item-post-animation td{
+  transition: .5s;
+
+}
+.item-post-animation:hover td{
+    transform: scale(1.1);
+   
+}
+.item-post-animation:hover tr{
+   border: 1px solid;
+   
+}
+
+
 
 /* ANIMATION */
 .item-post-animation.ng-leave {

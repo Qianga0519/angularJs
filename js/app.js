@@ -12,17 +12,19 @@ app.controller('mainCtrl', function ($scope, $rootScope) {
     $scope.logout = () => {
         localStorage.removeItem('user');
         $rootScope.user = 'Guest';
+        $scope.isLogin = false;
+        location.reload()
     };
 
     const user = JSON.parse(localStorage.getItem('user'));
     $scope.isLogin = false;
-    if (user) {
+    if (JSON.parse(localStorage.getItem('user'))) {
         $scope.isLogin = true;
     }
 });
 
 app.config(function ($routeProvider, $locationProvider) {
-    $locationProvider.hashPrefix('!'); // Thêm dòng này để đảm bảo sử dụng hashbang mode
+    $locationProvider.hashPrefix('!');
     $routeProvider
         .when('/', {
             templateUrl: 'Templates/post.html',
@@ -73,6 +75,7 @@ app.controller("authCtrl", function ($scope, $http, $location, $rootScope) {
         }, function (error) {
             console.error('Error during registration:', error);
         });
+
     };
 
     $scope.signIn = function () {
@@ -84,13 +87,23 @@ app.controller("authCtrl", function ($scope, $http, $location, $rootScope) {
         }).then(function (response) {
             alert(response.data.message);
             if (response.data.success) {
+                $scope.isLogin = true;
                 localStorage.setItem('user', JSON.stringify(response.data));
                 $rootScope.user = response.data.username;
-                $location.path('/');
+                
+                $location.path('/').replace(); // Redirects to home page without adding to history
+                $scope.$applyAsync(() => { // Ensures the path change is applied
+                    window.location.reload(); // Reloads the page to reflect changes
+                });
+               
+                
+            } else {
+                $scope.isLogin = false;
             }
         }, function (error) {
             console.error('Error during login:', error);
         });
+
     };
 });
 
@@ -257,45 +270,48 @@ app.controller("viewCtrl", function ($scope, $http, $routeParams) {
 });
 
 app.controller("createCtrl", function ($scope, $http) {
-    var btnCreate = document.querySelector('.btn-create-post');
-    btnCreate.disabled = true;
-    btnCreate.classList.add('disabled');
-    $scope.description = "";
-    $scope.title = "";
-    $scope.msg = "";
-    $scope.statusTitle = false;
-    $scope.statusDes = false;
-    $scope.titleChange = () => {
-        if ($scope.title.toString().length > 0) {
-            $scope.statusTitle = true
-            btnCreate.disabled = false;
-            btnCreate.classList.remove('disabled');
-        } else {
-            $scope.statusTitle = false
-            btnCreate.disabled = true;
-            btnCreate.classList.add('disabled');
+    if (JSON.parse(localStorage.getItem('user'))) {
+        var btnCreate = document.querySelector('.btn-create-post');
+        btnCreate.disabled = true;
+        btnCreate.classList.add('disabled');
+        $scope.description = "";
+        $scope.title = "";
+        $scope.msg = "";
+        $scope.statusTitle = false;
+        $scope.statusDes = false;
+        $scope.titleChange = () => {
+            if ($scope.title.toString().length > 0) {
+                $scope.statusTitle = true
+                btnCreate.disabled = false;
+                btnCreate.classList.remove('disabled');
+            } else {
+                $scope.statusTitle = false
+                btnCreate.disabled = true;
+                btnCreate.classList.add('disabled');
+            }
         }
-    }
-
-    $scope.add = function () {
-        var myModalEl = document.getElementById('createModal');
-        var modal = new bootstrap.Modal(myModalEl);
 
 
-        var data = {
-            title: $scope.title.toString(),
-            description: $scope.description.toString()
+        $scope.add = function () {
+            var myModalEl = document.getElementById('createModal');
+            var modal = new bootstrap.Modal(myModalEl);
+
+
+            var data = {
+                title: $scope.title.toString(),
+                description: $scope.description.toString()
+            };
+            $http.post("webservices/addPost.php", data)
+                .then(function (response) {
+                    $scope.msg = response.data;
+
+                    location.reload()
+                    modal.hide();
+                }, function (error) {
+                    console.error(error);
+                }).catch(function (error) {
+                    console.error(error);
+                });
         };
-        $http.post("webservices/addPost.php", data)
-            .then(function (response) {
-                $scope.msg = response.data;
-
-                location.reload()
-                modal.hide();
-            }, function (error) {
-                console.error(error);
-            }).catch(function (error) {
-                console.error(error);
-            });
-    };
+    }
 });
