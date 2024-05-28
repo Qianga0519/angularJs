@@ -69,8 +69,8 @@
         </select>
       </div>
       <span class="navbar-text text-light me-3">Welcome, {{ user }}</span>
-      <a class="btn btn-outline-success" href="#!login" ng-if="user === 'Guest'">Login</a>
-      <button class="btn btn-outline-danger" ng-click="logout()" ng-if="user !== 'Guest'">Logout</button>
+      <a class="btn btn-outline-success btn-login .glow-on-hover" href="#!login" ng-if="user === 'Guest'">Login</a>
+      <button class="btn btn-outline-danger btn-login" ng-click="logout()" ng-if="user !== 'Guest'">Logout</button>
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
         aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

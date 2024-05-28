@@ -21,7 +21,8 @@ html {}
 }
 
 .btn-search,
-.btn-addpost {
+.btn-addpost,
+.btn-login {
     color: var(--primary-color);
     background: white;
     outline: none;
@@ -86,7 +87,8 @@ html {}
 
 
 
-.btn-search:hover {
+.btn-search:hover,
+.btn-login:hover {
     color: white;
     background: var(--primary-color);
 
@@ -100,7 +102,8 @@ html {}
 
 }
 
-.search-input:focus {
+.search-input:focus,
+.btn-login:focus {
     outline: none;
     box-shadow: none;
     -webkit-box-shadow: none;
@@ -120,15 +123,16 @@ html {}
     height: 35px;
     position: relative;
     margin-right: 10px;
-    border-radius: 5px ;
+    border-radius: 5px;
 }
+
 .change-color-box select {
-   position: absolute;
-   inset: 0;
-   padding: 8px;
-   color:var(--color-primary);
-   background: white;
-   border-radius: 5px ;
+    position: absolute;
+    inset: 0;
+    padding: 8px;
+    color: var(--color-primary);
+    background: white;
+    border-radius: 5px;
 }
 
 
@@ -226,7 +230,8 @@ html {}
 }
 
 .btn-search:focus,
-.btn-addpost:focus {
+.btn-addpost:focus,
+.btn-login:focus {
     box-shadow: none;
 }
 
@@ -243,4 +248,79 @@ html {}
 }
 
 
+.loading {
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.box {
+    width: 200px;
+    height: 50px;
+    border-radius: 50px;
+    position: relative;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    overflow: hidden;
+
+}
+
+.box::after,
+.box::before {
+    content: '';
+    display: block;
+    position: absolute;
+    border-radius: 50px;
+}
+
+.box::before {
+
+    width: 50%;
+    height: 100%;
+    inset: 0;
+    transform: translateX(-100%);
+    border-radius: 50px;
+
+    animation: run 1.5s linear infinite forwards;
+    background: black;
+}
+
+.box::after {
+    inset: 0;
+    border: 5px solid var(--color-primary);
+
+}
+
+@keyframes run {
+    0% {
+        transform: translateX(-50%);
+    }
+
+    100% {
+        transform: translateX(220%);
+    }
+}
+
+.navbar-toggler {
+    background: white;
+    border: 1px solid var(--color-primary);
+
+}
+
+span.navbar-toggler-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+span.navbar-toggler-icon::after {
+
+    content: '☰';
+    display: block;
+    color: var(--color-primary);
+    font-size: 30px;
+
+}

@@ -90,13 +90,13 @@ app.controller("authCtrl", function ($scope, $http, $location, $rootScope) {
                 $scope.isLogin = true;
                 localStorage.setItem('user', JSON.stringify(response.data));
                 $rootScope.user = response.data.username;
-                
-                $location.path('/').replace(); // Redirects to home page without adding to history
-                $scope.$applyAsync(() => { // Ensures the path change is applied
-                    window.location.reload(); // Reloads the page to reflect changes
+
+                $location.path('/').replace();
+                $scope.$applyAsync(() => {
+                    window.location.reload();
                 });
-               
-                
+
+
             } else {
                 $scope.isLogin = false;
             }
@@ -129,38 +129,40 @@ app.directive('loadCss', function () {
 
 app.controller("updateCtrl", function ($scope, $http, $routeParams) {
     // Fetch the post to be updated
-    $http({
-        url: "webservices/getPost.php",
-        params: { id: $routeParams.id },
-        method: "get"
-    }).then(function (response) {
-        if (response.data.status !== 0) {
-            $scope.post = response.data;
-        } else {
-            alert('Post not found');
-        }
-    });
-
-    // Update the post
-    $scope.updatePost = function () {
-        var data = {
-            id: $scope.post.id,
-            title: $scope.post.title,
-            description: $scope.post.description
-        };
+    if (JSON.parse(localStorage.getItem('user'))) {
         $http({
-            url: "webservices/update.php",
-            method: "POST",
-            data: $.param(data),
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            url: "webservices/getPost.php",
+            params: { id: $routeParams.id },
+            method: "get"
         }).then(function (response) {
-            if (response.data.status === 1) {
-                alert('Post updated successfully');
+            if (response.data.status !== 0) {
+                $scope.post = response.data;
             } else {
-                alert('Failed to update post: ' + response.data.msg);
+                alert('Post not found');
             }
         });
-    };
+
+        // Update the post
+        $scope.updatePost = function () {
+            var data = {
+                id: $scope.post.id,
+                title: $scope.post.title,
+                description: $scope.post.description
+            };
+            $http({
+                url: "webservices/update.php",
+                method: "POST",
+                data: $.param(data),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            }).then(function (response) {
+                if (response.data.status === 1) {
+                    alert('Post updated successfully');
+                } else {
+                    alert('Failed to update post: ' + response.data.msg);
+                }
+            });
+        };
+    }
 }).directive('ckEditor', function () {
     return {
         require: '?ngModel',
@@ -208,11 +210,14 @@ app.controller("postCtrl", function ($scope, $http, $routeParams) {
     $scope.posts = [];
     $scope.totalPages = 0;
     $scope.noDataMessage = '';
-
-
-
+    $scope.isLogin = false;
+    if (JSON.parse(localStorage.getItem('user'))) {
+        $scope.isLogin = true;
+    }
+    $scope.isLoading = false; 
     $scope.loadPosts = function () {
-        $http.get("webservices/allpost.php", {
+        $scope.isLoading = true;
+        $http.get("webservices/allpost.php", {  
             params: {
                 q: $scope.searchQuery,
                 page: $scope.currentPage
@@ -225,6 +230,11 @@ app.controller("postCtrl", function ($scope, $http, $routeParams) {
             }
             $scope.posts = response.data;
             $scope.totalPages = Math.ceil(response.data.total / response.data.limit);
+        }).catch(function (error) {
+            console.error('An error occurred:', error);
+            $scope.noDataMessage = 'An error occurred while fetching data';
+        }).finally(function () {
+            $scope.isLoading = false; 
         });
     };
 
