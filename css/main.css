@@ -324,13 +324,15 @@ span.navbar-toggler-icon::after {
     height: 300px;
     position: relative;
     overflow: hidden;
+    animation: sun 5s linear infinite;
+
 }
 
 .member {
     position: relative;
     width: 60px;
     height: 30px;
-   
+
     left: -15%;
 }
 
@@ -351,14 +353,21 @@ span.navbar-toggler-icon::after {
 .mem-1 {
     scale: .4;
     top: 45%;
-    animation: carRun 5s .5s cubic-bezier(1,.15,.37,.94)infinite forwards;
-    
+    animation: carRun 5s .5s cubic-bezier(1, .15, .37, .94)infinite;
+
 }
 
 .mem-2 {
     scale: .5;
     top: 38%;
-    animation: carRun 5s  cubic-bezier(.2,.65,.9,.24) infinite forwards;
+    animation: carRun 5s cubic-bezier(.2, .65, .9, .24) infinite;
+}
+
+.mem-3 {
+    scale: .45;
+    top: 25%;
+    left: 50%;
+    z-index: -1;
 }
 
 @keyframes carRun {
@@ -379,5 +388,42 @@ span.navbar-toggler-icon::after {
     100% {
         transform: rotate(40deg);
 
+    }
+}
+
+@keyframes sun {
+    0% {
+        filter: brightness(100%);
+    }
+
+    50% {
+        filter: brightness(40%);
+    }
+
+    100% {
+        filter: brightness(100%);
+    }
+}
+
+
+.rain-drop {
+    position: fixed;
+    top: -100px;
+    width: 1px;
+    height: 100px;
+    background-image: linear-gradient(to bottom, transparent, white);
+}
+
+@keyframes rainFall {
+    0% {
+        top: -100px;
+    }
+
+    50% {
+        top: 100vh;
+    }
+
+    100% {
+        top: 100vh;
     }
 }

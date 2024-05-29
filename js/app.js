@@ -1,4 +1,7 @@
+  
+
 var app = angular.module('myApp', ["ngRoute", "ngAnimate"]);
+
 
 app.controller('mainCtrl', function ($scope, $rootScope) {
     $scope.bgColor = "white";
