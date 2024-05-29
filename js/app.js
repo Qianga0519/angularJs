@@ -214,10 +214,10 @@ app.controller("postCtrl", function ($scope, $http, $routeParams) {
     if (JSON.parse(localStorage.getItem('user'))) {
         $scope.isLogin = true;
     }
-    $scope.isLoading = false; 
+    $scope.isLoading = false;
     $scope.loadPosts = function () {
         $scope.isLoading = true;
-        $http.get("webservices/allpost.php", {  
+        $http.get("webservices/allpost.php", {
             params: {
                 q: $scope.searchQuery,
                 page: $scope.currentPage
@@ -234,7 +234,7 @@ app.controller("postCtrl", function ($scope, $http, $routeParams) {
             console.error('An error occurred:', error);
             $scope.noDataMessage = 'An error occurred while fetching data';
         }).finally(function () {
-            $scope.isLoading = false; 
+            $scope.isLoading = false;
         });
     };
 
@@ -262,6 +262,8 @@ app.controller("postCtrl", function ($scope, $http, $routeParams) {
         $scope.searchQuery = "";
         $scope.loadPosts();
     }
+   
+   
 
 });
 app.controller("viewCtrl", function ($scope, $http, $routeParams) {
@@ -305,8 +307,6 @@ app.controller("createCtrl", function ($scope, $http) {
         $scope.add = function () {
             var myModalEl = document.getElementById('createModal');
             var modal = new bootstrap.Modal(myModalEl);
-
-
             var data = {
                 title: $scope.title.toString(),
                 description: $scope.description.toString()
@@ -314,9 +314,9 @@ app.controller("createCtrl", function ($scope, $http) {
             $http.post("webservices/addPost.php", data)
                 .then(function (response) {
                     $scope.msg = response.data;
-
                     location.reload()
                     modal.hide();
+
                 }, function (error) {
                     console.error(error);
                 }).catch(function (error) {

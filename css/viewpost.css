@@ -4,7 +4,43 @@
 
 
 
-h4,
+
+h4::before {
+    transform: scaleX(0);
+    transform-origin: bottom right;
+}
+
+h4:hover::before {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+h4 {
+    color: var(--color-primary);
+    text-align: center;
+    font-weight: bold;
+}
+h4::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    inset: 0 0 0 0;
+    background: linear-gradient(to left, #020024, #090979, #00d4ff);
+    z-index: -1;
+    transition: transform .3s ease;
+}
+
+h4 {
+    position: relative;
+    font-size: 5rem;
+}
+
+
+
+
 h5 {
     color: var(--color-primary);
     text-align: center;

@@ -2,12 +2,6 @@
     --primary-color: #4267B2
 }
 
-html {}
-
-/* body {
-    height: 1000vh;
-} */
-
 * {
     margin: 0;
     padding: 0;
@@ -237,15 +231,6 @@ html {}
 
 
 
-.footer {
-    background: var(--color-primary);
-    position: unset;
-    height: 200px;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    margin-top: 50px;
-}
 
 
 .loading {
@@ -256,7 +241,7 @@ html {}
     align-items: center;
 }
 
-.box {
+.box-load {
     width: 200px;
     height: 50px;
     border-radius: 50px;
@@ -268,15 +253,15 @@ html {}
 
 }
 
-.box::after,
-.box::before {
+.box-load::after,
+.box-load::before {
     content: '';
     display: block;
     position: absolute;
     border-radius: 50px;
 }
 
-.box::before {
+.box-load::before {
 
     width: 50%;
     height: 100%;
@@ -288,7 +273,7 @@ html {}
     background: black;
 }
 
-.box::after {
+.box-load::after {
     inset: 0;
     border: 5px solid var(--color-primary);
 
@@ -323,4 +308,76 @@ span.navbar-toggler-icon::after {
     color: var(--color-primary);
     font-size: 30px;
 
+
+
+}
+
+
+
+.footer {
+    margin-top: 50px;
+    position: unset;
+    background: url('../public/images/bg-city.jpg');
+    background-repeat: repeat-x;
+    background-size: contain;
+    width: 100%;
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+}
+
+.member {
+    position: relative;
+    width: 60px;
+    height: 30px;
+   
+    left: -15%;
+}
+
+.car {
+    position: absolute;
+    inset: 0;
+}
+
+.avatar {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    top: 150px;
+    left: 210px;
+    animation: shake .5s linear infinite alternate-reverse;
+}
+
+.mem-1 {
+    scale: .4;
+    top: 45%;
+    animation: carRun 5s .5s cubic-bezier(1,.15,.37,.94)infinite forwards;
+    
+}
+
+.mem-2 {
+    scale: .5;
+    top: 38%;
+    animation: carRun 5s  cubic-bezier(.2,.65,.9,.24) infinite forwards;
+}
+
+@keyframes carRun {
+    0% {
+        left: -15%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+@keyframes shake {
+    0% {
+        transform: rotate(-20deg);
+    }
+
+    100% {
+        transform: rotate(40deg);
+
+    }
 }

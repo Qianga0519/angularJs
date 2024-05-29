@@ -13,15 +13,15 @@ if (empty($username) || empty($email) || empty($password)) {
     $json = array('message' => 'Invalid email format');
 } else {
     // Kiểm tra xem email đã được sử dụng chưa
-    $check_email_query = "SELECT * FROM users WHERE username = '$email'";
+    $check_email_query = "SELECT * FROM users WHERE email = '$email'";
     $check_email_result = $con->query($check_email_query);
-    
+
     if ($check_email_result->num_rows > 0) {
         $json = array('message' => 'Email already exists');
     } else {
-        
-        $insert_query = "INSERT INTO users (name, username, password) VALUES ('$username', '$email', '$password')";
-        
+
+        $insert_query = "INSERT INTO users ( username, email ,password) VALUES ('$username', '$email', '$password')";
+
         if ($con->query($insert_query) === TRUE) {
             $json = array('message' => 'Registration successful');
         } else {
@@ -32,4 +32,3 @@ if (empty($username) || empty($email) || empty($password)) {
 
 header('Content-type: application/json');
 echo json_encode($json);
-?>

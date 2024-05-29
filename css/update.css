@@ -18,7 +18,7 @@ h4::before {
     bottom: 0;
     left: 0;
     inset: 0 0 0 0;
-    background: hsl(200 100% 80%);
+    background: linear-gradient(to left, #020024, #090979, #00d4ff);
     z-index: -1;
     transition: transform .3s ease;
 }
