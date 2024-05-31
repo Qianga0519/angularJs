@@ -1,4 +1,4 @@
-  
+
 
 var app = angular.module('myApp', ["ngRoute", "ngAnimate"]);
 
@@ -265,25 +265,75 @@ app.controller("postCtrl", function ($scope, $http, $routeParams) {
         $scope.searchQuery = "";
         $scope.loadPosts();
     }
-   
-   
-
 });
 app.controller("viewCtrl", function ($scope, $http, $routeParams) {
     var des = document.querySelector('.description')
-
+    const userId = (JSON.parse(localStorage.getItem('user'))) ? JSON.parse(localStorage.getItem('user')).id : 0
+    const btnLike = document.querySelector('.like')
+    var listLiked = [];
+    $scope.isLoading = false;
+    $scope.isLoading = true;
     $http({
-        url: "webservices/getPost.php",
-        params: { id: $routeParams.id },
+        url: "webservices/listLiked.php",
+        params: {
+            userId: userId,
+        },
         method: "get"
     })
         .then(function (response) {
-            $scope.posts = response.data;
-            des.innerHTML = `${response.data.description}`
-            console.log($scope.posts);
+            console.log(response.data)
+            localStorage.setItem('listLiked', JSON.stringify(response.data))
+            listLiked = JSON.parse(localStorage.getItem('listLiked'))
+            listLiked.forEach(e => {
+                if (e == $routeParams.id) {
+                    btnLike.firstChild.className = ''
+                    btnLike.firstChild.classList.add('fa-solid', 'fa-heart')
+                }
+            })
+          
+            return $http({
+                url: "webservices/getPost.php",
+                params: {
+                    id: $routeParams.id,
+                    userId: userId,
+                },
+                method: "get"
+            }).then(function (response) {
+              
+                $scope.posts = response.data;
+                des.innerHTML = `${response.data.description}`
+                console.log($scope.posts);
+            }).finally(function(){
+                $scope.isLoading = false;
+            })
         })
-});
 
+    $scope.likePost = function (postID) {
+        let user = JSON.parse(localStorage.getItem('user'))
+        if (user) {
+            $http({
+                url: "webservices/likePost.php",
+                data: {
+                    postId: postID,
+                    userId: user.id
+                },
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(function (response) {
+                    console.log(response.data.msg)
+                    btnLike.firstChild.className = '';
+                    btnLike.firstChild.classList.add(response.data.icon, 'fa-heart')
+                    btnLike.lastChild.innerHTML = response.data.likes
+                })
+
+        } else {
+            alert('login')
+        }
+    }
+});
 app.controller("createCtrl", function ($scope, $http) {
     if (JSON.parse(localStorage.getItem('user'))) {
         var btnCreate = document.querySelector('.btn-create-post');
@@ -305,8 +355,6 @@ app.controller("createCtrl", function ($scope, $http) {
                 btnCreate.classList.add('disabled');
             }
         }
-
-
         $scope.add = function () {
             var myModalEl = document.getElementById('createModal');
             var modal = new bootstrap.Modal(myModalEl);

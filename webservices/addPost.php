@@ -18,7 +18,7 @@ if (empty($des)) {
     return;
 }
 
-$query = "INSERT INTO lbl_posts (title, description, created_at, likes) VALUES ('$title', '$des', '$today', '$like')";
+$query = "INSERT INTO lbl_posts (title, description, created_at) VALUES ('$title', '$des', '$today')";
 
 
 if ($con->query($query) == TRUE) {

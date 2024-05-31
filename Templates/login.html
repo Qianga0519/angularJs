@@ -1,51 +1,51 @@
-<div class="content-login" >
-<div class="container login"  id="container" ng-controller="authCtrl">
-	<div class="form-container sign-up-container">
-		<form ng-submit="signUp()" class="frm" >
-			 <h1 class="">Create Account</h1>
-			<div class="social-container">
-				<a class="link" href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-				<a class="link" href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-				<a class="link" href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-			</div>
-			<span class="text-mes">or use your email for registration</span>
-			<input class="ipt" type="text" placeholder="Name" ng-model="signupData.name" required />
-			<input class="ipt" type="email" placeholder="Email"  ng-model="signupData.email" />
-			<input class="ipt" type="password" placeholder="Password" ng-model="signupData.password" required/>
-			<button class="but">Sign Up</button>
-		</form>
-	</div>
-	<div class="form-container sign-in-container">
-		<form ng-submit="signIn()" class="frm" >
-			 <h1 class="">Sign in</h1>
-			<div class="social-container">
-				<a class="link" href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-				<a class="link" href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-				<a class="link" href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-			</div>
-			<span class="text-mes">or use your account</span>
-			<input class="ipt"  type="email" placeholder="Email" ng-model="loginData.email" />
-			<input class="ipt" type="password" placeholder="Password"  ng-model="loginData.password"/>
-			
-			<a class="link" href="#">Forgot your password?</a>
-			<button class="but">Sign In</button>
-		</form>
-	</div>
-	<div class="overlay-container">
-		<div class="overlay">
-			<div class="overlay-panel overlay-left">
-				<h1>Welcome Back!</h1>
-				<p class="mess">To keep connected with us please login with your personal info</p>
-				<button class="ghost but" id="signIn">Sign In</button>
-			</div>
-			<div class="overlay-panel overlay-right">
-				<h1>Hello, Friend!</h1>
-				<p class="mess">Enter your personal details and start journey with us</p>
-				<button class="ghost but" id="signUp">Sign Up</button>
+
+	<div class="container login" style="margin-top: 100px;" id="container" ng-controller="authCtrl">
+		<div class="form-container sign-up-container">
+			<form ng-submit="signUp()" class="frm">
+				<h1 class="">Create Account</h1>
+				<div class="social-container">
+					<a class="link" href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+					<a class="link" href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+					<a class="link" href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+				</div>
+				<span class="text-mes">or use your email for registration</span>
+				<input class="ipt" type="text" placeholder="Name" ng-model="signupData.name" required />
+				<input class="ipt" type="email" placeholder="Email" ng-model="signupData.email" />
+				<input class="ipt" type="password" placeholder="Password" ng-model="signupData.password" required />
+				<button class="but">Sign Up</button>
+			</form>
+		</div>
+		<div class="form-container sign-in-container">
+			<form ng-submit="signIn()" class="frm">
+				<h1 class="">Sign in</h1>
+				<div class="social-container">
+					<a class="link" href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+					<a class="link" href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+					<a class="link" href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+				</div>
+				<span class="text-mes">or use your account</span>
+				<input class="ipt" type="email" placeholder="Email" ng-model="loginData.email" />
+				<input class="ipt" type="password" placeholder="Password" ng-model="loginData.password" />
+
+				<a class="link" href="#">Forgot your password?</a>
+				<button class="but">Sign In</button>
+			</form>
+		</div>
+		<div class="overlay-container">
+			<div class="overlay">
+				<div class="overlay-panel overlay-left">
+					<h1>Welcome Back!</h1>
+					<p class="mess">To keep connected with us please login with your personal info</p>
+					<button class="ghost but" id="signIn">Sign In</button>
+				</div>
+				<div class="overlay-panel overlay-right">
+					<h1>Hello, Friend!</h1>
+					<p class="mess">Enter your personal details and start journey with us</p>
+					<button class="ghost but" id="signUp">Sign Up</button>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
-</div>
+
 <script src="./js/login.js"></script>

@@ -14,11 +14,13 @@ h4:hover::before {
     transform: scaleX(1);
     transform-origin: bottom left;
 }
+
 h4 {
     color: var(--color-primary);
     text-align: center;
     font-weight: bold;
 }
+
 h4::before {
     content: " ";
     display: block;
@@ -67,25 +69,79 @@ h5 {
     height: 50px;
     align-items: center;
     justify-content: center;
+
 }
 
-.interact i {
+.interact button {
+    /* padding: 5px; */
+    border: none;
+    background: none;
+    width: 100px;
+    height: 100%;
+    width: 50px;
+    flex-grow: 4;
+}
+
+.interact button:nth-child(3) {
+
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.interact button i {
+    font-size: 30px;
+}
+
+.interact button:nth-child(1) i {
+    color: red;
+    transition: 2s;
+}
+
+
+.interact button:nth-child(1) i:hover {
+    animation: breark 1s linear infinite alternate-reverse;
+}
+
+@keyframes breark {
+    0% {
+        scale: 1;
+    }
+
+    100% {
+        scale: 1.5;
+
+    }
+}
+
+.like {
+
+    outline: var(--color-primary);
+    display: flex;
+    position: relative;
+}
+
+.like i {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 30%;
-    font-size: 30px;
-    padding: 10px;
-    padding: 10px;
+    position: absolute;
+    width: 50px;
+    height: 100%;
+
 }
 
-.interact i:nth-child(1) {
-    justify-content: left;
+.like span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 50px;
+    height: 100%;
+    left: 50px;
 }
 
-.interact i:nth-child(3) {
-    justify-content: right;
-}
 
 .glow-on-hover {
 
