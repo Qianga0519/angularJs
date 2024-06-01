@@ -19,13 +19,12 @@ if (empty($username) || empty($email) || empty($password)) {
     if ($check_email_result->num_rows > 0) {
         $json = array('message' => 'Email already exists');
     } else {
-
         $insert_query = "INSERT INTO users ( username, email ,password) VALUES ('$username', '$email', '$password')";
 
         if ($con->query($insert_query) === TRUE) {
-            $json = array('message' => 'Registration successful');
+            $json = array('status' => true, 'message' => 'Tạo tài khoản thành công!');
         } else {
-            $json = array('message' => 'Registration failed');
+            $json = array('status' => false, 'message' => 'Tạo tài khoản thất bại!');
         }
     }
 }

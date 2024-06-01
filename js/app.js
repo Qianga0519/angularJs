@@ -2,6 +2,14 @@
 
 var app = angular.module('myApp', ["ngRoute", "ngAnimate"]);
 
+function createMessage(msgText) {
+    var body = document.querySelector('body')
+    let message = document.createElement('div')
+    message.classList.add('message')
+    message.style.display = 'block'
+    message.textContent = msgText
+    body.appendChild(message)
+}
 
 app.controller('mainCtrl', function ($scope, $rootScope) {
     $scope.bgColor = "white";
@@ -58,7 +66,6 @@ app.config(function ($routeProvider, $locationProvider) {
         })
 });
 
-// app.js
 app.controller("authCtrl", function ($scope, $http, $location, $rootScope) {
     $scope.signupData = {};
     $scope.loginData = {};
@@ -70,15 +77,17 @@ app.controller("authCtrl", function ($scope, $http, $location, $rootScope) {
             data: $.param($scope.signupData),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         }).then(function (response) {
-            if (response.data.success) {
-                alert('Registration successful!');
+            if (response.data.status == true) {
+                createMessage(response.data.message)
+                const signInButton = document.getElementById('signIn');
+                const container = document.getElementById('container');
+                container.classList.remove("right-panel-active");
             } else {
-                alert('Registration failed: ' + response.data.message);
+                createMessage(response.data.message)
             }
         }, function (error) {
             console.error('Error during registration:', error);
         });
-
     };
 
     $scope.signIn = function () {
@@ -88,25 +97,17 @@ app.controller("authCtrl", function ($scope, $http, $location, $rootScope) {
             data: $.param($scope.loginData),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         }).then(function (response) {
-            alert(response.data.message);
+            createMessage("Đăng nhập thành công!")
             if (response.data.success) {
                 $scope.isLogin = true;
                 localStorage.setItem('user', JSON.stringify(response.data));
                 $rootScope.user = response.data.username;
-
-                $location.path('/').replace();
-                $scope.$applyAsync(() => {
-                    window.location.reload();
-                });
-
-
             } else {
                 $scope.isLogin = false;
             }
         }, function (error) {
             console.error('Error during login:', error);
         });
-
     };
 });
 
@@ -120,8 +121,6 @@ app.directive('loadCss', function () {
             link.rel = 'stylesheet';
             link.href = attrs.loadCss;
             head.appendChild(link);
-
-            // Clean up on destroy
             scope.$on('$destroy', function () {
                 head.removeChild(link);
             });
@@ -131,7 +130,6 @@ app.directive('loadCss', function () {
 
 
 app.controller("updateCtrl", function ($scope, $http, $routeParams) {
-    // Fetch the post to be updated
     if (JSON.parse(localStorage.getItem('user'))) {
         $http({
             url: "webservices/getPost.php",
@@ -144,8 +142,6 @@ app.controller("updateCtrl", function ($scope, $http, $routeParams) {
                 alert('Post not found');
             }
         });
-
-        // Update the post
         $scope.updatePost = function () {
             var data = {
                 id: $scope.post.id,
@@ -290,7 +286,7 @@ app.controller("viewCtrl", function ($scope, $http, $routeParams) {
                     btnLike.firstChild.classList.add('fa-solid', 'fa-heart')
                 }
             })
-          
+
             return $http({
                 url: "webservices/getPost.php",
                 params: {
@@ -299,18 +295,20 @@ app.controller("viewCtrl", function ($scope, $http, $routeParams) {
                 },
                 method: "get"
             }).then(function (response) {
-              
                 $scope.posts = response.data;
                 des.innerHTML = `${response.data.description}`
                 console.log($scope.posts);
-            }).finally(function(){
+            }).finally(function () {
                 $scope.isLoading = false;
             })
         })
 
     $scope.likePost = function (postID) {
         let user = JSON.parse(localStorage.getItem('user'))
+
         if (user) {
+            btnLike.lastChild.textContent = '...'
+
             $http({
                 url: "webservices/likePost.php",
                 data: {
@@ -327,10 +325,12 @@ app.controller("viewCtrl", function ($scope, $http, $routeParams) {
                     btnLike.firstChild.className = '';
                     btnLike.firstChild.classList.add(response.data.icon, 'fa-heart')
                     btnLike.lastChild.innerHTML = response.data.likes
+
                 })
 
+
         } else {
-            alert('login')
+            createMessage("Đăng nhập đi bạn!")
         }
     }
 });
