@@ -20,6 +20,7 @@
             data-bs-toggle="dropdown" aria-expanded="false">
             Sort by
           </button>
+
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <button class="dropdown-item" ng-click="sortPosts('title')">Title</button>
             <button class="dropdown-item" ng-click="sortPosts('description')">Description</button>
@@ -32,6 +33,9 @@
         <thead>
           <tr>
             <th scope="col">Number</th>
+            <th scope="col">
+              Title
+            </th>
             <th scope="col">
               Description
             </th>
