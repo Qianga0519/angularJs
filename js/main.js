@@ -1,3 +1,25 @@
+
+let cursor = document.querySelector('.cursor1')
+var timeout;
+document.addEventListener('mousemove', (e) => {
+   let x = e.pageX
+   let y = e.pageY
+   cursor.style.top = y + 'px'
+   cursor.style.left = x + 'px'
+   cursor.style.display = "block"
+
+})
+document.addEventListener("mouseout", () => {
+   cursor.style.display = "none"
+})
+function stopMouse() {
+   cursor.style.display = "block"
+   cursor.style.display = "none"
+}
+clearTimeout(timeout)
+timeout = setTimeout(stopMouse, 1000)
+
+
 var btnSearch = document.querySelector('.search-box-btn')
 btnSearch.addEventListener('click', function () {
    this.parentElement.classList.toggle('open')
@@ -19,4 +41,5 @@ function addRain() {
    }
 }
 addRain()
+
 

@@ -547,3 +547,30 @@ span.navbar-toggler-icon::after {
         top: 100vh;
     }
 }
+
+
+.cursor1 {
+    width: 20px;
+    height: 20px;
+    position: fixed;
+    background: red;
+    z-index: 1050;
+    border-radius: 50%;
+    box-shadow: 0 0 20px red,
+        0 0 60px red,
+        0 0 100px red;
+    pointer-events: none;
+    animation: colors 5s infinite;
+    transform: translate(-50%, -50%);
+   
+}
+
+@keyframes colors {
+    0%{
+filter: hue-rotate(0deg);
+    }
+    100%{
+        filter: hue-rotate(360deg);
+
+    }
+}
