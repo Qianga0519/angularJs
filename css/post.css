@@ -93,8 +93,27 @@ h3 {
 }
 
 
-table{
-    box-shadow: 0 0 4px 6px rgba(80,80,80, .2);
+.wrapper-sort {
+    width: 100%;
+    height: 50px;
+    position: relative; 
+}
+
+.dropdown-toggle {
+    top: calc(50% + 10px);
+    position: absolute;
+    height: 30px;
+    font-size: 13px;
+    background: var(--color-primary);
+    border-radius: 5px;
+    width: 100px;
+    text-align: center;
+    line-height: 15px;
+}
+
+
+table {
+    box-shadow: 0 0 4px 6px rgba(80, 80, 80, .2);
 }
 
 
@@ -175,9 +194,7 @@ table{
     background: var(--color-primary);
 }
 
-.item-post-animation:hover td  {
-   
-}
+.item-post-animation:hover td {}
 
 
 

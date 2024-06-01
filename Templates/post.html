@@ -7,34 +7,43 @@
 <div class="row" ng-show="!isLoading">
   <div class="col-md-12  content-list-post">
     <div ng-controller="postCtrl">
-        <h4>ALL POSTS</h4>
+      <h4>ALL POSTS</h4>
       <div class="search-box">
         <input class="search-box-input" ng-model="searchQuery" type="text" ng-change="loadPosts()">
         <button class="search-box-btn">
           <i class="fas fa-search"></i>
         </button>
       </div>
+      <div class="wrapper-sort">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            Sort by
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <button class="dropdown-item" ng-click="sortPosts('title')">Title</button>
+            <button class="dropdown-item" ng-click="sortPosts('description')">Description</button>
+            <button class="dropdown-item" ng-click="sortPosts('created_at')">Created_at</button>
+          </ul>
+        </div>
+
+      </div>
       <table class="table" ng-if="posts.info.length > 0">
         <thead>
           <tr>
             <th scope="col">Number</th>
             <th scope="col">
-              Title
-              <button ng-click="sortPosts('title')">Sort</button>
-            </th>
-            <th scope="col">
               Description
-              <button ng-click="sortPosts('description')">Sort</button>
             </th>
             <th scope="col">
               Created
-              <button ng-click="sortPosts('created_at')">Sort</button>
             </th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="item-post-animation" ng-repeat="post in posts.info | orderBy:sortColumn:reverseOrder track by $index">
+          <tr class="item-post-animation"
+            ng-repeat="post in posts.info | orderBy:sortColumn:reverseOrder track by $index">
             <td>{{$index + 1}}</td>
             <td>{{ post.title }}</td>
             <td>{{ post.description.length > 50 ? (post.description | limitTo: 50) + '...' : post.description }}</td>
@@ -49,7 +58,7 @@
           </tr>
         </tbody>
       </table>
-      
+
       <div ng-if="noDataMessage">
         <p>{{ noDataMessage }}</p>
       </div>

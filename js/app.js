@@ -246,8 +246,10 @@ app.controller("postCtrl", function ($scope, $http, $routeParams) {
             $scope.loadPosts();
         }
     };
-
+   
     $scope.sortPosts = function (column) {
+        console.log(document.querySelector('.dropdown-toggle'))
+        document.querySelector('.dropdown-toggle').textContent = column
         if ($scope.sortColumn === column) {
             $scope.reverseOrder = !$scope.reverseOrder;
         } else {
