@@ -18,15 +18,24 @@
         <thead>
           <tr>
             <th scope="col">Number</th>
-            <th scope="col">Title</th>
-            <th scope="col">Description</th>
-            <th scope="col">Created</th>
+            <th scope="col">
+              Title
+              <button ng-click="sortPosts('title')">Sort</button>
+            </th>
+            <th scope="col">
+              Description
+              <button ng-click="sortPosts('description')">Sort</button>
+            </th>
+            <th scope="col">
+              Created
+              <button ng-click="sortPosts('created_at')">Sort</button>
+            </th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr  class="item-post-animation" ng-repeat="post in posts.info track by $index">
-            <td >{{$index + 1}}</td>
+          <tr class="item-post-animation" ng-repeat="post in posts.info | orderBy:sortColumn:reverseOrder track by $index">
+            <td>{{$index + 1}}</td>
             <td>{{ post.title }}</td>
             <td>{{ post.description.length > 50 ? (post.description | limitTo: 50) + '...' : post.description }}</td>
             <td>{{ post.created_at }}</td>
@@ -36,11 +45,11 @@
                   class="fa-solid fa-pen-to-square"></i></a>
               <a ng-hide="isLogin == false" ng-href="#!delete/{{ post.id }}" class="btn-post btn-del"><i
                   class="fa-solid fa-trash"></i></a>
-
             </td>
           </tr>
         </tbody>
       </table>
+      
       <div ng-if="noDataMessage">
         <p>{{ noDataMessage }}</p>
       </div>

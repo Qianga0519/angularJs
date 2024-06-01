@@ -209,17 +209,20 @@ app.controller("postCtrl", function ($scope, $http, $routeParams) {
     $scope.posts = [];
     $scope.totalPages = 0;
     $scope.noDataMessage = '';
-    $scope.isLogin = false;
-    if (JSON.parse(localStorage.getItem('user'))) {
-        $scope.isLogin = true;
-    }
+    $scope.isLogin = JSON.parse(localStorage.getItem('user')) ? true : false;
     $scope.isLoading = false;
+
+    $scope.sortColumn = '';
+    $scope.reverseOrder = false;
+
     $scope.loadPosts = function () {
         $scope.isLoading = true;
         $http.get("webservices/allpost.php", {
             params: {
                 q: $scope.searchQuery,
-                page: $scope.currentPage
+                page: $scope.currentPage,
+                sort: $scope.sortColumn,
+                order: $scope.reverseOrder ? 'desc' : 'asc'
             }
         }).then(function (response) {
             if (response.data.info.length === 0) {
@@ -244,6 +247,15 @@ app.controller("postCtrl", function ($scope, $http, $routeParams) {
         }
     };
 
+    $scope.sortPosts = function (column) {
+        if ($scope.sortColumn === column) {
+            $scope.reverseOrder = !$scope.reverseOrder;
+        } else {
+            $scope.sortColumn = column;
+            $scope.reverseOrder = false;
+        }
+        $scope.loadPosts();
+    };
 
     $scope.$watch('searchQuery', function () {
         $scope.currentPage = 1;
@@ -254,14 +266,14 @@ app.controller("postCtrl", function ($scope, $http, $routeParams) {
         $scope.loadPosts();
     });
 
-
     $scope.loadPosts(); // Initial load
     $scope.searchRemove = () => {
         document.querySelector('.search input').value = "";
         $scope.searchQuery = "";
         $scope.loadPosts();
-    }
+    };
 });
+
 app.controller("viewCtrl", function ($scope, $http, $routeParams) {
     var des = document.querySelector('.description')
     const userId = (JSON.parse(localStorage.getItem('user'))) ? JSON.parse(localStorage.getItem('user')).id : 0
