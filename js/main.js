@@ -1,23 +1,5 @@
 
-let cursor = document.querySelector('.cursor1')
-var timeout;
-document.addEventListener('mousemove', (e) => {
-   let x = e.clientX
-   let y = e.clientY
-   cursor.style.top = y + 'px'
-   cursor.style.left = x + 'px'
-   cursor.style.display = "block"
 
-})
-document.addEventListener("mouseout", () => {
-   cursor.style.display = "none"
-})
-function stopMouse() {
-   cursor.style.display = "block"
-   cursor.style.display = "none"
-}
-clearTimeout(timeout)
-timeout = setTimeout(stopMouse, 1000)
 
 
 var btnSearch = document.querySelector('.search-box-btn')
@@ -43,3 +25,22 @@ function addRain() {
 addRain()
 
 
+var cursor = document.querySelector('.cursor1')
+var timeout;
+document.addEventListener('mousemove', (e) => {
+   let x = e.clientX
+   let y = e.clientY
+   cursor.style.top = y + 'px'
+   cursor.style.left = x + 'px'
+   cursor.style.display = "block"
+
+})
+document.addEventListener("mouseout", () => {
+   cursor.style.display = "none"
+})
+function stopMouse() {
+   cursor.style.display = "block"
+   cursor.style.display = "none"
+}
+clearTimeout(timeout)
+timeout = setTimeout(stopMouse, 1000)
