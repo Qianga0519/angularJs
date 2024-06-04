@@ -39,7 +39,7 @@
   <!-- <div ng-include="'./Templates/navbar.html'"></div> -->
   <nav class="navbar navbar-expand-lg fixed-top bg-dark" data-bs-theme="dark">
     <div class="container-fluid">
-      <a class="navbar-brand me-auto" href="#">Logo</a>
+      <a class="navbar-brand me-auto logo" data-text="QDK" href="#">qdk</a>
       <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
@@ -58,22 +58,23 @@
               <input class="form-control search-input" type="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-outline-success btn-search" type="submit">Search</button>
             </form>
-          </ul>
+            
+          </ul><div class="change-color-box" style="height: 45px;">
+              <select class="select-bg" name="color" id="color" ng-model="bgColor" ng-change="changeBG()">
+                <option value="white">White</option>
+                <option value="rgba(198, 226, 255)">SlateGray</option>
+                <option value="rgba(255, 230, 247)">Pink</option>
+                <option value="rgba(169, 169, 169)">DarkGray</option>
+              </select>
+            </div>
         </div>
       </div>
-      <div class="change-color-box">
-        <select class="select-bg" name="color" id="color" ng-model="bgColor" ng-change="changeBG()">
-          <option value="white">White</option>
-          <option value="rgba(198, 226, 255)">SlateGray</option>
-          <option value="rgba(255, 230, 247)">Pink</option>
-          <option value="rgba(169, 169, 169)">DarkGray</option>
-        </select>
-      </div>
+     
       <span class="navbar-text text-light me-3">Welcome, {{ user }}</span>
-      <a class="btn btn-outline-success btn-login .glow-on-hover" href="#!login" ng-if="user === 'Guest'">Login</a>
-      <button class="btn btn-outline-danger btn-login" ng-click="logout()" ng-if="user !== 'Guest'">Logout</button>
+      <a class="btn btn-outline-success btn-login .glow-on-hover" style="height: 45px; margin-right: 10px;" href="#!login" ng-if="user === 'Guest'">Login</a>
+      <button style="height: 45px; margin-right: 10px;" class="btn btn-outline-danger btn-login" ng-click="logout()" ng-if="user !== 'Guest'">Logout</button>
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-        aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+        aria-controls="offcanvasNavbar" aria-label="Toggle navigation" style="height: 45px;">
         <span class="navbar-toggler-icon"></span>
       </button>
     </div>

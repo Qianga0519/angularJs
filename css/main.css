@@ -9,6 +9,51 @@
     font-family: sans-serif;
 }
 
+.logo {
+    position: relative;
+    font-size: 20px;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    -webkit-text-stroke: 0.2px white;
+    height: 40px;
+    width: 50px;
+    color: #2e3749;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.logo::before {
+    content: attr(data-text);
+    position: absolute;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    color: var(--color-primary);
+    -webkit-text-stroke: .5px var(--color-primary);
+    border-right: 2px solid var(--color-primary);
+    color: var(--color-primary);
+    overflow: hidden;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    animation: animate 2s linear infinite alternate-reverse;
+}
+
+.logo:hover{
+    color: #2e3749;
+}
+
+@keyframes animate {
+    0% {
+        width: 0%;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
 .message {
     display: none;
     position: fixed;
@@ -43,7 +88,6 @@
 
 .nav-item-home {
     position: relative;
-    background: white;
     color: var(--primary-color);
 }
 
@@ -52,8 +96,10 @@
     width: 100px;
     font-family: sans-serif;
     text-decoration: none;
-    color: #333;
-    border: 2px solid #333;
+    /* color: #333;
+    border: 2px solid #333; */
+    color: white;
+    border: 2px solid white; 
     letter-spacing: 2px;
     text-align: center;
     position: relative;
@@ -562,14 +608,15 @@ span.navbar-toggler-icon::after {
     pointer-events: none;
     animation: colors 5s infinite;
     transform: translate(-50%, -50%);
-   
+
 }
 
 @keyframes colors {
-    0%{
-filter: hue-rotate(0deg);
+    0% {
+        filter: hue-rotate(0deg);
     }
-    100%{
+
+    100% {
         filter: hue-rotate(360deg);
 
     }
